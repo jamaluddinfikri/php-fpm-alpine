@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+  web:
+    build: ./nginx
+    ports:
+      - "80:80"
+    volumes:
+      - /root/test/demo-aksara:/var/www
+    links:
+      - php
+    container_name: web
+
+  php:
+    build: ./php7.0
+    volumes:
+      - /root/test/demo-aksara:/var/www
+    container_name: php
+
+  php5:
+    build: ./php5.6
+    volumes:
+      - /root/test/demo-aksara:/var/www
+    container_name: php5
+
+  db:
+    image: mariadb:10.1
+    restart: always
+    ports: 
+      - 3306:3306
+    volumes:
+      - ./mysql:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=tonjoo
+    container_name: mariadb
+
